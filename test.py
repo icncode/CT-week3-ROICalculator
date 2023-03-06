@@ -37,8 +37,11 @@ class ROI_Calculator:
         total_investment = down_payment + closing_costs + rehab + misc
         self.investment = total_investment
         # Calculates annual return cash-on-cash (ROI)
-        cash_ROI = (self.annual_cash / self.investment)* 100
-        self.ROI = cash_ROI
+        if self.investment == 0:
+            self.ROI = 0
+        else:
+            cash_ROI = (self.annual_cash / self.investment)* 100
+            self.ROI = cash_ROI
 
 
 def run_ROI():
@@ -46,7 +49,7 @@ def run_ROI():
     change = 'y'
     # Greeting user
     os.system('cls') # Clears the terminal
-    print("Hello, welcome to the Rental Income Calculator!\nPlease enter all values without commas, symbols, or currencies .\n")
+    print("Hello, welcome to the Rental Income Calculator!\nPlease enter all values without commas, symbols, or currencies.\n")
     calc = ROI_Calculator()
     # Keep looping until user enters 1
     while choice != '1':           
@@ -59,12 +62,13 @@ def run_ROI():
                 laundry = float(input("What is your laundry income? "))
                 storage = float(input("What is your storage income? "))
                 misc = float(input("What are your miscellaneous incomes? "))
-                change = input("Would you like to change your entries? (y/n) ")
+                change = input("Would you like to change your entries? (y/n) ").strip(' es').lower()
             except ValueError:
                 os.system('cls') # Clears the terminal
                 print("Please enter only a number.")
                 continue # Restart loop
             break # Exit loop
+        change = 'y'
         # Adding all income and returning total
         calc.calc_income(rental, laundry, storage, misc)
         os.system('cls') # Clears the terminal
@@ -84,7 +88,7 @@ def run_ROI():
                 capEx = float(input("What are the capital expenses? "))
                 management = float(input("What are the management costs? "))
                 morgage = float(input("What are the morgage costs? "))
-                change = input("Would you like to change your entries? (y/n) ")
+                change = input("Would you like to change your entries? (y/n) ").strip(' es').lower()
             except ValueError:
                 os.system('cls') # Clears the terminal
                 print("Please enter only a number.")
@@ -107,7 +111,7 @@ def run_ROI():
                 closing_costs = float(input("What is your closing costs? "))
                 rehab = float(input("What is your rehababilitation costs? "))
                 misc = float(input("What is your miscelleanous costs? "))
-                change = input("Would you like to change your entries? (y/n) ")
+                change = input("Would you like to change your entries? (y/n) ").lower().strip(' es')
             except ValueError:
                 os.system('cls') # Clears the terminal
                 print("Please enter only a number.")
@@ -128,12 +132,13 @@ Would you like to do? """)
                 break
             elif choice == '2':
                 calc = ROI_Calculator()
+                os.system('cls') # Clears the terminal 
                 break
             elif choice == '3':
-                view = '2'
+                view = '8'
                 os.system('cls') # Clears the terminal
                 while view != '1':
-                    view = input("""\n(1) quit
+                    view = input("""\n(1) return to last menu
 (2) monthly income
 (3) monthly expenses
 (4) monthly cash flow
@@ -163,8 +168,5 @@ What would you like to see? """)
             
         os.system('cls') # Clears the terminal            
                           
-
-
-
-# run_ROI()
+run_ROI()
 
